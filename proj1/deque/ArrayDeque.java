@@ -107,14 +107,14 @@ public class ArrayDeque <T> implements Deque<T> {
 
     /** The Deque objects we’ll make are iterable (i.e. Iterable<T>)
      *  so we must provide this method to return an iterator.*/
-    public Iterator<T> iterator(){
-
-    }
+//    public Iterator<T> iterator(){
+//
+//    }
 
     /** Returns whether or not the parameter o is equal to the Deque.
      *  o is considered equal if it is a Deque and if it contains the same contents
      *  (as goverened by the generic T’s equals method) in the same order.*/
-    public boolean equals(Object o){
-
-    }
+//    public boolean equals(Object o){
+//
+//    }
 }
