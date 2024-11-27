@@ -101,14 +101,25 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
     }
 
-    /** Same as get, but uses recursion.*/
-    private Node recur_p = sentinel;
+    /** Same as get, but uses recursion. */
     public T getRecursive(int index) {
-        if (isEmpty() || index < 0) return null;
-        if (index == 0) return recur_p.next.item;
-        recur_p = recur_p.next;
-        return getRecursive(index-1);
+        if (index < 0 || isEmpty()) {
+            return null; // Base case: invalid index or empty deque.
+        }
+        return getRecursiveHelper(sentinel.next, index); // Start from the first node.
     }
+
+    /** Helper method to handle recursion. */
+    private T getRecursiveHelper(Node current, int index) {
+        if (current == null) {
+            return null; // Base case: reached the end of the list without finding the index.
+        }
+        if (index == 0) {
+            return current.item; // Base case: desired index reached.
+        }
+        return getRecursiveHelper(current.next, index - 1); // Recursive call.
+    }
+
 
     private class LinkedListDequeIterator implements Iterator<T> {
         private Node current;
@@ -144,14 +155,22 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
      *  (as governed by the generic T’s equals method) in the same order.*/
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof LinkedListDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
         else {
-            LinkedListDeque<T> other = (LinkedListDeque<T>) o;
-            if (size() != other.size()) return false;
+            Deque<T> other = null;
+            if (o instanceof LinkedListDeque) {
+                other = (LinkedListDeque<T>) o;
+            }
+            if (o instanceof ArrayDeque) {
+                other = (ArrayDeque<T>) o;
+            }
+            if (size() != other.size()) {
+                return false;
+            }
             Iterator<T> thisIterator = this.iterator();
-            Iterator<?> otherIterator = other.iterator();
+            Iterator<T> otherIterator = (Iterator<T>) ((Iterable<?>) other).iterator();
 
             while (thisIterator.hasNext() && otherIterator.hasNext()) {
                 T thisItem = thisIterator.next();

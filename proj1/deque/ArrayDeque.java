@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int nextFirst; //Help the addFirst method as a pointer
@@ -138,14 +138,22 @@ public class ArrayDeque<T> implements Deque<T> {
      *  (as governed by the generic T’s equals method) in the same order.*/
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof ArrayDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
         else {
-            ArrayDeque<T> other = (ArrayDeque<T>) o;
-            if (size() != other.size()) return false;
+            Deque<T> other = null;
+            if (o instanceof LinkedListDeque) {
+                other = (LinkedListDeque<T>) o;
+            }
+            if (o instanceof ArrayDeque) {
+                other = (ArrayDeque<T>) o;
+            }
+            if (size() != other.size()) {
+                return false;
+            }
             Iterator<T> thisIterator = this.iterator();
-            Iterator<?> otherIterator = other.iterator();
+            Iterator<T> otherIterator = (Iterator<T>) ((Iterable<?>) other).iterator();
 
             while (thisIterator.hasNext() && otherIterator.hasNext()) {
                 T thisItem = thisIterator.next();
