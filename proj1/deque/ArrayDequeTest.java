@@ -75,5 +75,17 @@ public class ArrayDequeTest {
             // You can capture System.out and verify the output if necessary
             deque.printDeque();
         }
+
+        @Test
+        public void testequals(){
+            ArrayDeque<Integer> deque1 = new ArrayDeque<>();
+            ArrayDeque<Integer> deque2 = new ArrayDeque<>();
+            deque1.addFirst(120);
+            deque1.addLast(130);
+            deque2.addFirst(120);
+            deque2.addLast(130);
+            if (deque1.equals(deque2)) System.out.println("true");
+            else System.out.println("false");
+        }
     }
 
