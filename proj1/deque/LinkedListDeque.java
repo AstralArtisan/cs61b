@@ -16,8 +16,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     /** The sentinel is always at the front of the list.（带有头结点的列表）
-     *  The first item (if it exists) is at sentinel.next.
-     */
+     *  The first item (if it exists) is at sentinel.next.*/
     private Node sentinel;
     private int size;
 
@@ -135,7 +134,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     /** The Deque objects we’ll make are iterable (i.e. Iterable<T>)
      *  so we must provide this method to return an iterator.*/
-    @Override
+
     public Iterator<T> iterator() {
         return new LinkedListDequeIterator();
     }
@@ -145,10 +144,14 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
      *  (as governed by the generic T’s equals method) in the same order.*/
     @Override
     public boolean equals(Object o) {
-        if (o instanceof LinkedListDeque a) {
-            if (size() != a.size()) return false;
+        if (!(o instanceof LinkedListDeque)) {
+            return false;
+        }
+        else {
+            LinkedListDeque<T> other = (LinkedListDeque<T>) o;
+            if (size() != other.size()) return false;
             Iterator<T> thisIterator = this.iterator();
-            Iterator otherIterator = a.iterator();
+            Iterator<?> otherIterator = other.iterator();
 
             while (thisIterator.hasNext() && otherIterator.hasNext()) {
                 T thisItem = thisIterator.next();

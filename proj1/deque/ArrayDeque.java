@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
+public class ArrayDeque<T> implements Deque<T> {
     private T[] items;
     private int size;
     private int nextFirst; //Help the addFirst method as a pointer
@@ -10,7 +10,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     /** Creates an empty array deque.
       * The array is a circular array.*/
-    @SuppressWarnings("unchecked")
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
@@ -18,7 +17,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         nextLast = 1;
     }
 
-    @SuppressWarnings("unchecked")
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
         int start = (nextFirst + 1) % items.length;
@@ -131,7 +129,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     /** The Deque objects we’ll make are iterable (i.e. Iterable<T>)
      *  so we must provide this method to return an iterator.*/
-    @Override
     public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }
@@ -141,10 +138,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
      *  (as governed by the generic T’s equals method) in the same order.*/
     @Override
     public boolean equals(Object o) {
-        if (o instanceof ArrayDeque a) {
-            if (size() != a.size()) return false;
+        if (!(o instanceof ArrayDeque)) {
+            return false;
+        }
+        else {
+            ArrayDeque<T> other = (ArrayDeque<T>) o;
+            if (size() != other.size()) return false;
             Iterator<T> thisIterator = this.iterator();
-            Iterator otherIterator = a.iterator();
+            Iterator<?> otherIterator = other.iterator();
 
             while (thisIterator.hasNext() && otherIterator.hasNext()) {
                 T thisItem = thisIterator.next();
